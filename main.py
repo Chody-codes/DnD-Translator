@@ -3,7 +3,7 @@ import sys
 from textwrap import fill
 from PIL import Image, ImageDraw, ImageFont
 
-i = 1
+i = 1  # Iteration start
 
 
 def resource_path(relative_path):
@@ -12,8 +12,8 @@ def resource_path(relative_path):
 
 
 while True:
-    # Here's the 'main menu'
-
+    # Main Menu
+    
     while True:
         print('Which language would you like to translate to?')
         try:
@@ -22,16 +22,19 @@ while True:
                 lang = 'Davek'
                 font = ImageFont.truetype(resource_path('Davek.otf'), 28, encoding='unic')
                 fcolor = 'silver'
+                real_text_width = 625
                 break
             elif q1 == 2:
                 lang = 'Iokharic'
                 font = ImageFont.truetype(resource_path('Iokharic.otf'), 28, encoding='unic')
                 fcolor = 'red'
+                real_text_width = 640
                 break
             elif q1 == 3:
                 lang = 'Rellanic'
                 font = ImageFont.truetype(resource_path('Rellanic.otf'), 28, encoding='unic')
                 fcolor = 'darkgreen'
+                real_text_width = 645
                 break
             elif q1 == 9:
                 exit(666)
@@ -40,18 +43,17 @@ while True:
         except ValueError:
             print('Please enter a valid response(Use numbers to select)')
 
-    # Enter your english here
-
+    # Enter English Here
+    
     print(f'{lang} chosen')
     string = input('Enter English\n')
-    titlestring = string.replace('?', '_')
-    newstring = string.replace(',', ' ')
-    fill_string = fill(newstring, 50)
-
+    titlestring = string.replace('?', '_')  # Get rid of ?'s as they break the script on most machines
+    newstring = string.replace(',', ' ')  # Get rid of ,'s as they are'nt in the font yet
+    fill_string = fill(newstring, 50)  # Fill string to make paragraph style text
     text_width, text_height = font.getsize(string)
-
-    # This was a quick way at attempting to make a dynamic box based on the text being filled
-
+    
+    # My quick attempt at a dynamic box around the filled text. Not sure how to do it better yet. Will probably come back to this one day
+    
     count = 0
     for count in range(len(string[::50])):
         count += 2
@@ -67,15 +69,19 @@ while True:
         real_text_height = len(string) * count // 2
     elif len(string) > 25:
         real_text_height = len(string) * count // 1
+        real_text_width = text_width + 10
     else:
         real_text_height = text_height + 10
+        real_text_width = text_width + 10
 
-    # Making the Image
-
-    canvas = Image.new('RGB', (650, real_text_height), 'black')
+    # Make the image here
+    
+    canvas = Image.new('RGB', (real_text_width, real_text_height), 'black')
     draw = ImageDraw.Draw(canvas)
     draw.text((5, 5), fill_string, fcolor, font)
-
-    canvas.save(f'{i}. {lang}' + '.png', "PNG")  # Send this to friend
-    canvas.save(f'{i}. {lang} - ' + titlestring[:15] + '.png', "PNG")  # Keep as reference
-    i += 1
+    
+    # Save the image with brief reference along with a copy to directly send to someone in the session
+    
+    canvas.save(f'{i}. {lang}' + '.png', "PNG")
+    canvas.save(f'{i}. {lang} - ' + titlestring[:15] + '.png', "PNG")
+    i += 1  # Iteration plus 1 to keep the files organized for the user
