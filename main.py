@@ -12,7 +12,6 @@ def resource_path(relative_path):
 
 
 while True:
-    text_length = 730
     lang = 'ERROR'
     font = ImageFont.truetype("arial.ttf", 15)
     fcolor = 'white'
