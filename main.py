@@ -1,9 +1,16 @@
-from PIL import Image, ImageDraw, ImageFont
-from textwrap import fill
 import os
 import sys
+from textwrap import fill
+from PIL import Image, ImageDraw, ImageFont
+
 
 i = 1
+
+# Py charm is annoying without having these in here somewhere as constants.
+# I know I could get rid of the notification, but sometimes it can be helpful
+lang = 'ERROR'
+font = ImageFont.truetype("arial.ttf", 15)
+fcolor = 'white'
 
 
 def resource_path(relative_path):
@@ -12,15 +19,8 @@ def resource_path(relative_path):
 
 
 while True:
-    # Py charm is annoying without having these in here somewhere as constants.
-    # I know I could get rid of the notification, but sometimes it can be helpful
-
-    lang = 'ERROR'
-    font = ImageFont.truetype("arial.ttf", 15)
-    fcolor = 'white'
-    
     # Here's the 'main menu'
-    
+
     for main in range(100):
         print('Which language would you like to translate to?')
         try:
@@ -58,7 +58,7 @@ while True:
     text_width, text_height = font.getsize(string)
 
     # This was a quick way at attempting to make a dynamic box based on the text being filled
-    
+
     count = 0
     for count in range(len(string[::50])):
         count += 2
@@ -76,13 +76,14 @@ while True:
         real_text_height = len(string) * count // 1
     else:
         real_text_height = text_height + 10
-    
+
     # Making the Image
-    
+
     canvas = Image.new('RGB', (650, real_text_height), 'black')
     draw = ImageDraw.Draw(canvas)
     draw.text((5, 5), fill_string, fcolor, font)
 
-    canvas.save(f'{i}. {lang}' + '.png', "PNG")
-    canvas.save(f'{i}. {lang} -' + titlestring[:15] + '.png', "PNG")
+    canvas.save(f'{i}. {lang}' + '.png', "PNG")  # Send this to friend
+    canvas.save(f'{i}. {lang} - ' + titlestring[:15] + '.png', "PNG")  # Keep as reference
     i += 1
+    
