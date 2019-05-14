@@ -7,3 +7,5 @@ I coded this for my brother, so he can send encrypted messages to people in his 
 Input English and the program will create a png that has your text printed in your selected language. 
 
 Code is 100% ready for PyInstaller
+
+Fonts can be found online from dafont. I am not sure if I can post them on here.
