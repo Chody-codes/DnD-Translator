@@ -47,7 +47,7 @@ while True:
         except ValueError:
             print('Please enter a valid response(Use numbers to select)')
 
-    # Here's where the 'magic' happens haha
+    # Enter your english here
 
     print(f'{lang} chosen')
     string = input('Enter English\n')
